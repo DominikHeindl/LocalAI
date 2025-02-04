@@ -1,0 +1,104 @@
+volumes:
+  ollama_storage:
+  open-webui_storage:
+
+networks:
+  internal:
+    driver: bridge
+
+services:
+
+  ollama:
+    container_name: ollama
+    image: ollama/ollama:latest
+    volumes:
+      - ollama_storage:/root/.ollama
+    networks:
+      - internal
+    ports:
+      - 11434:11434
+    restart: unless-stopped
+    pull_policy: always
+    tty: true
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 0
+              capabilities: [gpu]
+              
+              
+  ollama-pull:
+    container_name: ollama-pull
+    image: ollama/ollama:latest
+    volumes:
+      - ollama_storage:/root/.ollama
+    networks:
+      - internal
+    entrypoint: /bin/sh
+    command:
+      - "-c"
+      - "sleep 5; OLLAMA_HOST=ollama:11434 ollama pull llama3.2:3b"
+    depends_on:
+      - ollama      
+
+  nginx:
+    container_name: nginx
+    image: nginx:alpine
+    volumes:
+      - ./conf.d:/etc/nginx/conf.d
+      - ./ssl:/etc/nginx/ssl
+    networks:
+      - internal  
+    ports:
+      - "443:443"
+    restart: unless-stopped
+    extra_hosts:
+      - "host.docker.internal:host-gateway"      
+    depends_on:
+      - open-webui
+
+  open-webui:
+    container_name: open-webui
+    image: ghcr.io/open-webui/open-webui:latest
+    volumes:
+      - open-webui_storage:/app/backend/data
+    networks:
+      - internal
+    ports:
+      - "3000:8080"
+    restart: unless-stopped
+    environment:
+       - OLLAMA_BASE_URL=http://ollama:11434
+       - AUDIO_TTS_ENGINE=openai
+       - AUDIO_TTS_OPENAI_API_BASE_URL=http://openedai:8000/v1
+       - AUDIO_TTS_OPENAI_API_KEY=sk-111111111
+       - AUDIO_TTS_MODEL=tts-1-hd
+       - AUDIO_TTS_VOICE=alloy
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      - ollama
+      - openedai
+      
+  openedai:
+    container_name: openedai
+    image: ghcr.io/matatonic/openedai-speech:0.18.2
+    volumes:
+      - ./openedai/voices:/app/voices
+      - ./openedai/config:/app/config
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+    environment:
+      - TTS_HOME=voices
+      - HF_HOME=voices
+      - PRELOAD_MODEL=xtts_v2.0.2
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 0
+              capabilities: [gpu]
