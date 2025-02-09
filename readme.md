@@ -19,7 +19,7 @@
 	
 	-Nvidia Drivers installed (Optional)
 
-	[**Linux How-to**](https://github.com/DominikHeindl/LocalAI/Linux_install.md)
+	[**Linux How-to**](https://github.com/DominikHeindl/LocalAI/linux_install.md)
 
 2. Download Package
 ```
