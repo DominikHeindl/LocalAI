@@ -1,70 +1,36 @@
-### What’s included
+## What’s included
 
-[**Ollama**](https://ollama.com/) - Cross-platform LLM platform to install
-and run the latest local LLMs
+[**Ollama**](https://ollama.com/) - Get up and running with Llama 3.3, DeepSeek-R1, Phi-4, Gemma 2, and other large language models. 
 
-[**Open-webui**](https://qdrant.tech/) - Open-source, high performance vector
-store with an comprehensive API
+[**Open-webui**](https://openwebui.com/) - User-friendly AI Interface (Supports Ollama, OpenAI API, ...) 
 
-[**openedAI**](https://www.postgresql.org/) -  Workhorse of the Data
-Engineering world, handles large amounts of data safely.
+[**openedAI**](https://github.com/matatonic/openedai-speech) -  An OpenAI API compatible text to speech server using Coqui AI's xtts_v2 and/or piper tts as the backend.
 
-[**nginx**](https://www.postgresql.org/) -  Workhorse of the Data
-Engineering world, handles large amounts of data safely.
+[**nginx**](https://github.com/nginx/nginx) -  NGINX is the world's most popular Web Server, high performance Load Balancer, Reverse Proxy, API Gateway and Content Cache.
+
+[**homeassistant**](https://www.postgresql.org/) -  Open source home automation that puts local control and privacy first.
 
 
+## Install
 
-## Installation on Linux
+1. Prerequisites
 
-## 
+	-Docker installed
+	-Nvidia Drivers installed (Optional)
 
-1. Install Docker on Ubuntu https://docs.docker.com/engine/install/ubuntu/
-```
-sudo apt-get update
-sudo apt-get install -y apt-transport-https ca-certificates curl software-properties-common
+	[**Linux How-to**](https://github.com/DominikHeindl/Linux_install.md)
 
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
-echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-
-sudo apt-get update
-sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-```
-
-
-2. Install Nvidia Drivers
-```
-sudo apt update
-sudo ubuntu-drivers autoinstall
-sudo reboot
-```
-
-3. Install Nvidia Container Toolkit
-```
-curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey \
-    | sudo gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg
-curl -s -L https://nvidia.github.io/libnvidia-container/stable/deb/nvidia-container-toolkit.list \
-    | sed 's#deb https://#deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://#g' \
-    | sudo tee /etc/apt/sources.list.d/nvidia-container-toolkit.list
-sudo apt-get update
-
-sudo apt-get install -y nvidia-container-toolkit
-
-sudo nvidia-ctk runtime configure --runtime=docker
-sudo systemctl restart docker
-
-```
-
-4. Install LocalAI
+2. Download Package
 ```
 git clone https://github.com/DominikHeindl/LocalAI.git
-cd localAI
-
+cd LocalAI
 ```
 
-
-
-5. Run
+3. Create Self-Signed Certificate or import your own to /ssl
 ```
 openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout ssl/nginx.key -out ssl/nginx.crt
-docker compose up
 ```
+
+4. Run all Containers
+```
+docker compose up
