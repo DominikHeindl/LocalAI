@@ -6,7 +6,7 @@
 
 [**openedAI**](https://github.com/matatonic/openedai-speech) -  An OpenAI API compatible text to speech server using Coqui AI's xtts_v2 and/or piper tts as the backend.
 
-[**nginx**](https://github.com/nginx/nginx) -  NGINX is the world's most popular Web Server, high performance Load Balancer, Reverse Proxy, API Gateway and Content Cache.
+[**nginx**](https://github.com/nginx/nginx) -  Web Server, high performance Load Balancer, Reverse Proxy, API Gateway and Content Cache.
 
 [**homeassistant**](https://www.postgresql.org/) -  Open source home automation that puts local control and privacy first.
 
@@ -18,7 +18,7 @@
 	-Docker installed
 	-Nvidia Drivers installed (Optional)
 
-	[**Linux How-to**](https://github.com/DominikHeindl/Linux_install.md)
+	[**Linux How-to**](https://github.com/DominikHeindl/LocalAI/Linux_install.md)
 
 2. Download Package
 ```
