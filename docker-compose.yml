@@ -28,7 +28,6 @@ services:
               count: 0
               capabilities: [gpu]
               
-              
   ollama-pull:
     container_name: ollama-pull
     image: ollama/ollama:latest
@@ -41,7 +40,7 @@ services:
       - "-c"
       - "sleep 5; OLLAMA_HOST=ollama:11434 ollama pull llama3.2:3b"
     depends_on:
-      - ollama      
+      - ollama
 
   nginx:
     container_name: nginx
@@ -50,12 +49,12 @@ services:
       - ./conf.d:/etc/nginx/conf.d
       - ./ssl:/etc/nginx/ssl
     networks:
-      - internal  
+      - internal
     ports:
       - "443:443"
     restart: unless-stopped
     extra_hosts:
-      - "host.docker.internal:host-gateway"      
+      - "host.docker.internal:host-gateway"
     depends_on:
       - open-webui
 
@@ -88,6 +87,8 @@ services:
     volumes:
       - ./openedai/voices:/app/voices
       - ./openedai/config:/app/config
+    networks:
+      - internal      
     ports:
       - "8000:8000"
     restart: unless-stopped
@@ -102,3 +103,16 @@ services:
             - driver: nvidia
               count: 0
               capabilities: [gpu]
+
+  homeassistant:
+    container_name: homeassistant
+    image: "ghcr.io/home-assistant/home-assistant:stable"
+    volumes:
+      - /ha/config:/config
+      - /ha/etc/localtime:/etc/localtime:ro
+      - /ha/run/dbus:/run/dbus:ro
+    networks:
+      - internal      
+    restart: unless-stopped
+    privileged: true
+    network_mode: host
