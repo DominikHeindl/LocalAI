@@ -112,6 +112,8 @@ services:
       - /ha/etc/localtime:/etc/localtime:ro
       - /ha/run/dbus:/run/dbus:ro
     networks:
-      - internal      
+      - internal
+    ports:
+      - "8123:8123"      
     restart: unless-stopped
     privileged: true
