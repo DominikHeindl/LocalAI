@@ -16,6 +16,7 @@
 1. Prerequisites
 
 	-Docker installed
+	
 	-Nvidia Drivers installed (Optional)
 
 	[**Linux How-to**](https://github.com/DominikHeindl/LocalAI/Linux_install.md)
