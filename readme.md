@@ -23,8 +23,8 @@
 
 2. Download Package
 ```
-git clone https://github.com/DominikHeindl/LocalAI.git
-cd LocalAI
+git clone https://github.com/DominikHeindl/localAI.git
+cd localAI
 ```
 
 3. Create Self-Signed Certificate or import your own to /ssl
