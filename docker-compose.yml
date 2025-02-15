@@ -20,7 +20,8 @@ services:
     restart: unless-stopped
     pull_policy: always
     tty: true
-    gpus: all
+    gpus: 
+     - "all"
               
   ollama-pull:
     container_name: ollama-pull
@@ -90,7 +91,8 @@ services:
       - TTS_HOME=voices
       - HF_HOME=voices
       - PRELOAD_MODEL=xtts_v2.0.2
-    gpus: all
+    gpus: 
+      - "all"
 
   homeassistant:
     container_name: homeassistant
