@@ -108,9 +108,9 @@ services:
     container_name: homeassistant
     image: "ghcr.io/home-assistant/home-assistant:stable"
     volumes:
-      - /ha/config:/config
-      - /ha/etc/localtime:/etc/localtime:ro
-      - /ha/run/dbus:/run/dbus:ro
+      - ./ha/config:/config   
+      - /etc/localtime:/etc/localtime:ro
+      - /run/dbus:/run/dbus:ro
     networks:
       - internal
     ports:
