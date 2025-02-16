@@ -81,7 +81,7 @@ services:
       
   openedai:
     container_name: openedai
-    image: ghcr.io/matatonic/openedai-speech:0.18.2
+    image: ghcr.io/matatonic/openedai-speech
     volumes:
       - ./openedai/voices:/app/voices
       - ./openedai/config:/app/config
@@ -93,7 +93,7 @@ services:
     environment:
       - TTS_HOME=voices
       - HF_HOME=voices
-      - PRELOAD_MODEL=xtts_v2.0.2
+      - PRELOAD_MODEL=xtts
     gpus:
       - driver: nvidia
         count: "all"
